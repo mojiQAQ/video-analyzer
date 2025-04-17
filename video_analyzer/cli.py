@@ -72,6 +72,7 @@ def main():
     parser.add_argument("--keep-frames", action="store_true", help="Keep extracted frames after analysis")
     parser.add_argument("--whisper-model", type=str, help="Whisper model size (tiny, base, small, medium, large), or path to local Whisper model snapshot")
     parser.add_argument("--start-stage", type=int, default=1, help="Stage to start processing from (1-3)")
+    parser.add_argument("--skip-stage", type=int, default=0, help="Stage to skip (1-3)")
     parser.add_argument("--max-frames", type=int, default=sys.maxsize, help="Maximum number of frames to process")
     parser.add_argument("--log-level", type=str, default="INFO", 
                         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
@@ -147,7 +148,7 @@ def main():
             )
             
         # Stage 2: Frame Analysis
-        if args.start_stage <= 2:
+        if args.start_stage <= 2 and args.skip_stage > 2:
             logger.info("Analyzing frames...")
             analyzer = VideoAnalyzer(
                 client, 
@@ -162,7 +163,7 @@ def main():
                 frame_analyses.append(analysis)
                 
         # Stage 3: Video Reconstruction
-        if args.start_stage <= 3:
+        if args.start_stage <= 3 and args.skip_stage > 3:
             logger.info("Reconstructing video description...")
             video_description = analyzer.reconstruct_video(
                 frame_analyses, frames, transcript
