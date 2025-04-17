@@ -62,7 +62,7 @@ def main():
     parser.add_argument("video_path", type=str, help="Path to the video file")
     parser.add_argument("--config", type=str, default="config",
                         help="Path to configuration directory")
-    parser.add_argument("--output", type=str, help="Output directory for analysis results")
+    parser.add_argument("--output_dir", type=str, help="Output directory for analysis results")
     parser.add_argument("--client", type=str, help="Client to use (ollama or openrouter)")
     parser.add_argument("--ollama-url", type=str, help="URL for the Ollama service")
     parser.add_argument("--api-key", type=str, help="API key for OpenAI-compatible service")
